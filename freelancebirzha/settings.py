@@ -31,12 +31,22 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'django_extensions',
+    'tinymce',
+    'users.apps.UsersConfig',
+    'orders.apps.OrdersConfig',
+    'faqs.apps.FaqsConfig',
+    'articals.apps.ArticalsConfig',
+    'skills.apps.SkillsConfig',
+
 ]
 
 MIDDLEWARE = [
