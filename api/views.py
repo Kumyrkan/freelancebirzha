@@ -1,39 +1,35 @@
 from django.shortcuts import render, get_object_or_404
+
 from articals.models import Article
+from orders.models import Order
+
 from articals.serializers import ArticleSerializer
+from orders.serializers import OrderSerializer
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework import mixins
+from rest_framework import generics
+from rest_framework import permissions
 
-class AricleList(APIView):
+class ArticleList(generics.ListCreateAPIView):
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
+    permission_classes = [permissions.AllowAny]
 
-    def get(self, request):
-        obj = Article.objects.all()
-        serializer = ArticleSerializer(obj, many = True)
-        return Response(serializer.data)
-    
-    def post(self, request):
-        serializer = ArticleSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class ArticleDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
-class ArticleDetail(APIView):
-    def get(self, request, pk):
-        obj = get_object_or_404(Article.objects.all(), pk=pk)
-        serializer = ArticleSerializer(obj)
-        return Response(serializer.data)
-    
-    def put(self, request, pk):
-        obj = get_object_or_404(Article.objects.all(), pk=pk)
-        serializer = ArticleSerializer(obj, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, pk):
-        obj = get_object_or_404(Article.objects.all(), pk=pk)
-        obj.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+class OrderList(generics.ListCreateAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+    permission_classes = [permissions.AllowAny]
+
+class OrderDetail(generics.RetrieveDestroyAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+    permission_classes = [permissions.AllowAny]
