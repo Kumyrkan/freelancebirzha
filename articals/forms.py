@@ -2,7 +2,7 @@ from django import forms
 
 from articals.models import Article
 
-class ArticalForm(forms.ModelForm):
+class ArticleForm(forms.ModelForm):
 
     class Meta:
         model = Article

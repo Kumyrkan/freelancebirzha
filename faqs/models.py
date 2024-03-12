@@ -3,7 +3,7 @@ from tinymce.models import HTMLField
 
 class Faq(models.Model):
     title = models.CharField(max_length = 255, verbose_name = 'Часто задаваемый вопрос')
-    description = models.TextField(verbose_name = 'Описание')
+    description = HTMLField(verbose_name = 'Описание')
 
     class Meta:
         verbose_name = 'Часто задаваемый вопрос'

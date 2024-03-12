@@ -12,6 +12,7 @@ from rest_framework import status
 from rest_framework import mixins
 from rest_framework import generics
 from rest_framework import permissions
+from authorization.permissions import IsSuperAdmin
 
 class ArticleList(generics.ListCreateAPIView):
     queryset = Article.objects.all()
@@ -21,7 +22,7 @@ class ArticleList(generics.ListCreateAPIView):
 class ArticleDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, IsSuperAdmin]
 
 
 class OrderList(generics.ListCreateAPIView):
@@ -32,4 +33,4 @@ class OrderList(generics.ListCreateAPIView):
 class OrderDetail(generics.RetrieveDestroyAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticated, IsSuperAdmin]
